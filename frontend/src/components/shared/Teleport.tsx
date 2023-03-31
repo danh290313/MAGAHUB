@@ -1,0 +1,19 @@
+import { memo, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+
+interface PortalProps {
+  children: React.ReactNode;
+  selector?: string;
+}
+
+const Portal: React.FC<PortalProps> = ({ children, selector = "body" }) => {
+  const [el, setEl] = useState<Element | null>(null);
+
+  useEffect(() => {
+    setEl(document.querySelector(selector));
+  }, [selector]);
+
+  return el ? ReactDOM.createPortal(children, el) : null;
+};
+
+export default memo(Portal);
